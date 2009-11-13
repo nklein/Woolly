@@ -6,6 +6,8 @@
     :depends-on (#:sheeple)
     :components ((:module "woolly"
 		  :components ((:file "package")
+		               (:file "app"
+			        :depends-on ("package"))
 		               (:file "container"
 			        :depends-on ("package"))
 			       (:file "window"

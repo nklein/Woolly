@@ -1,10 +1,14 @@
 (defpackage #:woolly
   (:use #:cl)
-  (:export #:=container=
+  (:export #:=app=
+	      #:main-loop
+           #:=container=
 	      #:children
 	   #:=window=
 	      #:width
 	      #:height
-	      #:title))
+	      #:title
+	      #:display-window
+	      #:destroy-window))
 
 (in-package #:woolly)

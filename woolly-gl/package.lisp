@@ -1,8 +1,6 @@
 (defpackage #:woolly-gl
   (:use #:cl)
-  (:export #:realize-window
-	   #:destroy-window
-	   #:display-window
-	   #:main-loop))
+  (:export #:=app=
+	   #:=window=))
 
 (in-package #:woolly-gl)
