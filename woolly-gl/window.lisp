@@ -8,7 +8,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defclass woolly-window-gl (glut:window)
-  (object)
+  ((object :initarg :object
+	   :initform (error "Must attach to a woolly-gl:=window=")))
   (:default-initargs :width 640
                      :height 480
 		     :title "Woolly"
@@ -75,5 +76,6 @@
   (declare (ignore xx yy))
   (cond
     ((eql key #\q) (error 'exit-main-loop-condition))
-    ((eql key #\z) (destroy-window (slot-value w 'object)))))
+    ((eql key #\p) (describe w))
+    ((eql key #\z) (woolly:destroy-window (slot-value w 'object)))))
 
