@@ -8,5 +8,7 @@
 		  :components ((:file "package")
 		               (:file "app"
 			        :depends-on ("package"))
+			       (:file "button"
+				:depends-on ("package"))
 			       (:file "window"
 				:depends-on ("package"))))))

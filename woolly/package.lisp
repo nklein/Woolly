@@ -2,11 +2,19 @@
   (:use #:cl)
   (:export #:=app=
 	      #:main-loop
-           #:=container=
-	      #:children
-	   #:=window=
+	   #:=widget=
+	      #:offset-x
+	      #:offset-y
 	      #:width
 	      #:height
+	      #:draw
+	      #:mousedown
+	      #:mouseup
+           #:=container=
+	      #:children
+	      #:add
+	   #:=button=
+	   #:=window=
 	      #:title
 	      #:display-window
 	      #:destroy-window))

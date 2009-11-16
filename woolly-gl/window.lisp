@@ -20,11 +20,14 @@
 (sheeple:defproto =window= (woolly:=window=)
   (gl-window))
 
-(sheeple:defreply sheeple:init-object :after ((ww woolly-gl:=window=)
+(sheeple:defreply sheeple:init-object :after ((ww =window=)
 					      &key (width (woolly:width ww))
 					           (height (woolly:height ww))
 					           (title  (woolly:title ww)))
-  (setf (gl-window ww) (make-instance 'woolly-window-gl
+  (setf (woolly:width ww) width
+	(woolly:height ww) height
+	(woolly:title ww) title
+	(gl-window ww) (make-instance 'woolly-window-gl
 				      :object ww
 				      :width  width
 				      :height height
@@ -44,6 +47,20 @@
       (glut:destroy-window (glut:id ww))
       (setf (gl-window woolly-window) nil))))
 
+(sheeple:defreply woolly:mousedown :around ((woolly-window =window=)
+					    button xx yy)
+  (sheeple:call-next-reply woolly-window
+			   button
+			   xx
+			   (- (woolly:height woolly-window) yy 1)))
+
+(sheeple:defreply woolly:mouseup :around ((woolly-window =window=)
+					  button xx yy)
+  (sheeple:call-next-reply woolly-window
+			   button
+			   xx
+			   (- (woolly:height woolly-window) yy 1)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defmethod glut:display-window :before ((w woolly-window-gl))
@@ -54,13 +71,16 @@
   (gl:load-identity))
 
 (defmethod glut:display ((w woolly-window-gl))
-  )
+  (gl:clear :color-buffer)
+  (with-slots (object) w
+    (woolly:draw object))
+  (gl:flush))
 
 (defmethod glut:reshape ((w woolly-window-gl) width height)
   (gl:viewport 0 0 width height)
   (gl:matrix-mode :projection)
   (gl:load-identity)
-  (gl:ortho -1 1 -1 1 1.5 500)
+  (gl:ortho 0 width 0 height 0 100)
   (gl:matrix-mode :modelview)
   (gl:load-identity))
 
@@ -79,3 +99,8 @@
     ((eql key #\p) (describe w))
     ((eql key #\z) (woolly:destroy-window (slot-value w 'object)))))
 
+(defmethod glut:mouse ((w woolly-window-gl) button state xx yy)
+  (with-slots (object) w
+    (cond
+      ((eq state :down) (woolly:mousedown object button xx yy))
+      ((eq state :up)   (woolly:mouseup object button xx yy)))))
