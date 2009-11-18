@@ -2,6 +2,11 @@
   (:use #:cl)
   (:export #:=app=
 	      #:main-loop
+	   #:=font=
+	      #:em-size
+	      #:zpb-font-loader
+	      #:open-font
+	      #:draw-string
 	   #:=widget=
 	      #:offset-x
 	      #:offset-y
