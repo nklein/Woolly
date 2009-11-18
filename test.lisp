@@ -5,7 +5,7 @@
 
 (defun test ()
   (let ((font (sheeple:object :parents toolkit:=font=
-			      :em-size 16
+			      :em-size 48
 			      :pathname "font.ttf")))
     (let ((app (sheeple:object :parents toolkit:=app=))
 	  (win (sheeple:object :parents toolkit:=window=
@@ -13,8 +13,8 @@
 			       :width 320
 			       :height 240))
 	  (but (sheeple:object :parents toolkit:=button=
-			       :offset-x 0
-			       :offset-y 0
+			       :offset-x 40
+			       :offset-y 40
 			       :width 100
 			       :height 100
 			       :font font

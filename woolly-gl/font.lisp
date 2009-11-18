@@ -47,14 +47,16 @@
 	   (render-string (string font-loader &optional (pos 0) prev)
 	     (when (< pos (length string))
 	       (let ((cur (zpb-ttf:find-glyph (aref string pos) font-loader)))
+		 (unless prev
+		     (gl:translate (- (zpb-ttf:left-side-bearing cur)) 0 0))
 		 (render-glyph cur)
 		 (gl:translate (zpb-ttf:advance-width cur) 0 0)
 		 (when prev
-		   (gl:translate (zpb-ttf:kerning-offset prev
-							 cur
-							 font-loader)
-				 0
-				 0))
+		     (gl:translate (zpb-ttf:kerning-offset prev
+							   cur
+							   font-loader)
+				   0
+				   0))
 		 (render-string string font-loader (1+ pos) cur)))))
     (let* ((font-loader (woolly:zpb-font-loader font))
 	   (box (zpb-ttf:string-bounding-box string font-loader :kerning t))
