@@ -13,7 +13,7 @@
   (:default-initargs :width 640
                      :height 480
 		     :title "Woolly"
-		     :mode '(:single :rgb :depth)))
+		     :mode '(:single :rgb :stencil)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -31,8 +31,7 @@
 				      :object ww
 				      :width  width
 				      :height height
-				      :title  title
-				      :mode   '(:single :rgb))))
+				      :title  title)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -65,13 +64,16 @@
 
 (defmethod glut:display-window :before ((w woolly-window-gl))
   (gl:clear-color 0 0 0 0)
+  (gl:stencil-mask 1)
+  (gl:clear-stencil 0)
+  (gl:stencil-op :invert :invert :invert)
   (gl:matrix-mode :projection)
   (gl:load-identity)
   (gl:matrix-mode :modelview)
   (gl:load-identity))
 
 (defmethod glut:display ((w woolly-window-gl))
-  (gl:clear :color-buffer)
+  (gl:clear :color-buffer-bit)
   (with-slots (object) w
     (woolly:draw object))
   (gl:flush))

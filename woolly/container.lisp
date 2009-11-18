@@ -24,11 +24,10 @@
 	       (when kid
 		 (let ((ret (mousedown kid
 				       button
-				      
 				       (- xx (offset-x kid))
 				       (- yy (offset-y kid)))))
 		   (cond
-		     ((null ret) (propagate (next kids) button xx yy))
+		     ((null ret) (propagate (rest kids) button xx yy))
 		     (t (setf (mouse-active container) kid)
 			ret)))))))
     (setf (mouse-active container) nil)
@@ -38,4 +37,5 @@
   "For a CONTAINER getting a mouseup event, it has to see if one of its members accepted the mousedown event.  The container will only accept the mouseup event if a member accepted the mousedown event and that same member accepts the mouseup event."
   (let ((active (mouse-active container)))
     (when active
-      (mouseup active button xx yy))))
+      (mouseup active button xx yy)
+      (setf (mouse-active container) nil))))

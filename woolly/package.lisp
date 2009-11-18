@@ -5,7 +5,6 @@
 	   #:=font=
 	      #:em-size
 	      #:zpb-font-loader
-	      #:open-font
 	      #:draw-string
 	   #:=widget=
 	      #:offset-x
@@ -19,6 +18,8 @@
 	      #:children
 	      #:add
 	   #:=button=
+	      #:font
+	      #:label
 	   #:=window=
 	      #:title
 	      #:display-window
