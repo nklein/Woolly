@@ -13,7 +13,6 @@
 					      &key (em-size (em-size font))
 					           pathname
 					      &allow-other-keys)
-  (format t "INIT FONT: :em-size ~S :pathname ~S~%" em-size pathname)
   (when pathname
     (open-font font pathname))
   (setf (em-size font) em-size)
