@@ -5,8 +5,8 @@
 
 (defun test ()
   (let ((font (sheeple:object :parents toolkit:=font=
-			      :em-size 48
-			      :pathname "font.ttf")))
+			      :em-size 18
+			      :pathname "okolaks/okolaksRegular.ttf")))
     (let ((app (sheeple:object :parents toolkit:=app=))
 	  (win (sheeple:object :parents toolkit:=window=
 			       :title "Woolly Window 1"

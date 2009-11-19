@@ -13,7 +13,7 @@
   (:default-initargs :width 640
                      :height 480
 		     :title "Woolly"
-		     :mode '(:single :rgb :stencil)))
+		     :mode '(:single :rgba :alpha :stencil)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
