@@ -97,21 +97,21 @@
   (gl:ortho 0 width 0 height -100 100)
   (gl:matrix-mode :modelview)
   (gl:load-identity)
-
   (gl:enable :blend)
   (gl:blend-func :src-alpha :one-minus-src-alpha)
-
+  (gl:enable :normalize)
+  (gl:enable :rescale-normal)
   (gl:enable :lighting)
   (gl:enable :light0)
   (gl:enable :color-material)
   (gl:shade-model :smooth)
-  (gl:light-model :light-model-two-side t)
+  ;(gl:light-model :light-model-two-side nil)
   (gl:light-model :light-model-local-viewer nil)
   (gl:color-material :front-and-back :ambient-and-diffuse)
-  (gl:light :light0 :position #(-1 -1 2 0))
+  (gl:light :light0 :position #(-3 6 9 0))
   (gl:light :light0 :ambient #(0.0 0.0 0.0 1.0))
   (gl:light :light0 :diffuse #(0.85 0.85 0.8 1.0))
-  (gl:light :light0 :specular #(1 1 0.8 1)))
+  (gl:light :light0 :specular #(1 1 0.9 1)))
 
 #|
 (defmethod glut:visibility ((w woolly-window-gl) state)
