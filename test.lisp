@@ -13,8 +13,8 @@
 			       :width 640
 			       :height 480))
 	  (but (sheeple:object :parents toolkit:=button=
-			       :offset-x 40
-			       :offset-y 40
+			       :offset-x 15
+			       :offset-y 360
 			       :width 300
 			       :height 100
 			       :font font
@@ -26,5 +26,8 @@
 	 
       (woolly:display-window win)
       (woolly:add win but)
+      (woolly:add win (sheeple:object :parents but
+				      :offset-x 325
+				      :label "Button #2"))
       (woolly:main-loop app)
       (woolly:destroy-window win))))
