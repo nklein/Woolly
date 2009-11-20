@@ -37,5 +37,5 @@
   "For a CONTAINER getting a mouseup event, it has to see if one of its members accepted the mousedown event.  The container will only accept the mouseup event if a member accepted the mousedown event and that same member accepts the mouseup event."
   (let ((active (mouse-active container)))
     (when active
-      (mouseup active button xx yy)
+      (mouseup active button (- xx (offset-x active)) (- yy (offset-y active)))
       (setf (mouse-active container) nil))))

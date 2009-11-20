@@ -4,11 +4,11 @@
   (pressed))
 
 (sheeple:defreply woolly:mousedown :around ((button =button=) mb xx yy)
-  (setf (pressed button) (sheeple:call-next-reply)))
+  (setf (pressed button) (sheeple:call-next-reply))
+  (pressed button))
 
-(sheeple:defreply woolly:mouseup :around ((button =button=) mb xx yy)
-  (setf (pressed button) nil)
-  (sheeple:call-next-reply))
+(sheeple:defreply woolly:mouseup :before ((button =button=) mb xx yy)
+  (setf (pressed button) nil))
 
 (sheeple:defreply woolly:draw ((button =button=))
   (labels ((draw-button-shape (ww hh zz &optional color1 color2)
