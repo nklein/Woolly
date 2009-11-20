@@ -19,6 +19,11 @@
 			       :height 100
 			       :font font
 			       :label "Button")))
+      (sheeple:defreply woolly:mouseup :around ((bb but) mouse-button xx yy)
+	 (when (sheeple:call-next-reply)
+	   (format t "BUTTON CLICKED!~%")
+	   t))
+	 
       (woolly:display-window win)
       (woolly:add win but)
       (woolly:main-loop app)
