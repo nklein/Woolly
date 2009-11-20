@@ -132,4 +132,5 @@
   (with-slots (object) w
     (cond
       ((eq state :down) (woolly:mousedown object button xx yy))
-      ((eq state :up)   (woolly:mouseup object button xx yy)))))
+      ((eq state :up)   (woolly:mouseup object button xx yy))))
+  (glut:post-redisplay))

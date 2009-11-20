@@ -1,7 +1,14 @@
 (in-package #:woolly-gl)
 
 (sheeple:defproto =button= (woolly:=button=)
-  ())
+  (pressed))
+
+(sheeple:defreply woolly:mousedown :around ((button =button=) mb xx yy)
+  (setf (pressed button) (sheeple:call-next-reply)))
+
+(sheeple:defreply woolly:mouseup :around ((button =button=) mb xx yy)
+  (setf (pressed button) nil)
+  (sheeple:call-next-reply))
 
 (sheeple:defreply woolly:draw ((button =button=))
   (labels ((draw-button-shape (ww hh zz &optional color1 color2)
@@ -65,7 +72,9 @@
       (gl:with-pushed-matrix
 	  (gl:translate (woolly:offset-x button) (woolly:offset-y button) 0)
 	(gl:with-pushed-attrib (:current-bit :line-bit :polygon-bit)
-	  (draw-button ww hh 5.0))
+	  (draw-button ww hh (if (pressed button) -5 5)))
 	(gl:color 0 0 0 1)
+	(when (pressed button)
+	  (gl:translate 1.5 -3 0))
 	(woolly:draw-string (woolly:font button) (woolly:label button)
 			    :xx (/ ww 2) :yy (/ hh 2) :centered t)))))
