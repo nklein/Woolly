@@ -6,11 +6,13 @@
     :depends-on (#:woolly #:sheeple #:cl-glut #:cl-glu #:cl-opengl #:cffi)
     :components ((:module "woolly-gl"
 		  :components ((:file "package")
+		               (:file "utils"
+			        :depends-on ("package"))
 		               (:file "font"
 			        :depends-on ("package"))
 		               (:file "app"
 			        :depends-on ("package"))
 			       (:file "button"
-				:depends-on ("package" "font"))
+				:depends-on ("package" "font" "utils"))
 			       (:file "window"
 				:depends-on ("package"))))))

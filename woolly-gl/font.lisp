@@ -81,7 +81,8 @@
 	  (gl:scale ss ss 1))
 	(when centered
 	  (gl:translate (/ (- bx1 bx2) 2) (/ (- by1 by2) 2) 0))
-	(gl:with-pushed-attrib (:stencil-test :color)
+	(gl:with-pushed-attrib (:current-bit :color-buffer-bit :line-bit
+				:hint-bit :stencil-buffer-bit)
 	  ;; antialias lines
 	  (gl:enable :blend)
 	  (gl:blend-func :src-alpha :one-minus-src-alpha)

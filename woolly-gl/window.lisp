@@ -40,6 +40,18 @@
     (let ((ww (gl-window woolly-window)))
       (glut:display-window ww))))
 
+(sheeple:defreply woolly:draw :before ((woolly-window =window=))
+  (gl:with-pushed-attrib (:current-bit)
+    (let ((ww (woolly:width woolly-window))
+	  (hh (woolly:height woolly-window)))
+      (gl:with-primitives :quads
+	(gl:color 0 0 0.25 1)
+	(gl:vertex 0 0)
+	(gl:vertex ww 0)
+	(gl:color 0 0 0.75 1)
+	(gl:vertex ww hh)
+	(gl:vertex 0 hh)))))
+
 (sheeple:defreply woolly:destroy-window ((woolly-window =window=))
   (let ((ww (gl-window woolly-window)))
     (when ww
@@ -82,9 +94,24 @@
   (gl:viewport 0 0 width height)
   (gl:matrix-mode :projection)
   (gl:load-identity)
-  (gl:ortho 0 width 0 height 0 100)
+  (gl:ortho 0 width 0 height -100 100)
   (gl:matrix-mode :modelview)
-  (gl:load-identity))
+  (gl:load-identity)
+
+  (gl:enable :blend)
+  (gl:blend-func :src-alpha :one-minus-src-alpha)
+
+  (gl:enable :lighting)
+  (gl:enable :light0)
+  (gl:enable :color-material)
+  (gl:shade-model :smooth)
+  (gl:light-model :light-model-two-side t)
+  (gl:light-model :light-model-local-viewer nil)
+  (gl:color-material :front-and-back :ambient-and-diffuse)
+  (gl:light :light0 :position #(-1 -1 2 0))
+  (gl:light :light0 :ambient #(0.0 0.0 0.0 1.0))
+  (gl:light :light0 :diffuse #(0.85 0.85 0.8 1.0))
+  (gl:light :light0 :specular #(1 1 0.8 1)))
 
 #|
 (defmethod glut:visibility ((w woolly-window-gl) state)

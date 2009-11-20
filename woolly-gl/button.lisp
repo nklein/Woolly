@@ -4,16 +4,66 @@
   ())
 
 (sheeple:defreply woolly:draw ((button =button=))
-  (let ((ww (woolly:width button))
-	(hh (woolly:height button)))
-    (gl:with-pushed-matrix
-      (gl:translate (woolly:offset-x button) (woolly:offset-y button) 0)
-      (gl:color 0.5 0.5 0.5 0)
-      (gl:with-primitives :quads
-	(gl:vertex 0 0)
-	(gl:vertex ww 0)
-	(gl:vertex ww hh)
-	(gl:vertex 0 hh))
-      (gl:color 0 0 0 1)
-      (woolly:draw-string (woolly:font button) (woolly:label button)
-			  :xx (/ ww 2) :yy (/ hh 2) :centered t))))
+  (labels ((draw-button-shape (ww hh zz &optional color1 color2)
+	     (let ((dx (min 5 (/ ww 2)))
+		   (dy (min 5 (/ hh 2))))
+	       (gl:with-primitives :quads
+		 ;; center
+		 (when color1 (apply #'gl:color color1))
+		 (gl:vertex dx dy zz)
+		 (gl:vertex (- ww dx) dy zz)
+		 (when color2 (apply #'gl:color color2))
+		 (gl:vertex (- ww dx) (- hh dy) zz)
+		 (gl:vertex dx (- hh dy) zz)
+
+		 ;; top
+		 (when color2 (apply #'gl:color color2))
+		 (gl:vertex dx (- hh dy) zz)
+		 (gl:vertex (- ww dx) (- hh dy) zz)
+		 (gl:vertex ww hh 0)
+		 (gl:vertex 0 hh 0)
+
+		 ;; bottom
+		 (when color1 (apply #'gl:color color1))
+		 (gl:vertex dx dy zz)
+		 (gl:vertex (- ww dx) dy zz)
+		 (gl:vertex ww 0 0)
+		 (gl:vertex 0 0 0)
+
+		 ;; left
+		 (when color1 (apply #'gl:color color1))
+		 (gl:vertex 0 0 0)
+		 (gl:vertex dx dy zz)
+		 (when color2 (apply #'gl:color color2))
+		 (gl:vertex dx (- hh dy) zz)
+		 (gl:vertex 0 hh 0)
+
+		 ;; right
+		 (when color1 (apply #'gl:color color1))
+		 (gl:vertex ww 0 0)
+		 (gl:vertex (- ww dx) dy zz)
+		 (when color2 (apply #'gl:color color2))
+		 (gl:vertex (- ww dx) (- hh dy) zz)
+		 (gl:vertex ww hh 0))))
+
+	   (draw-button (ww hh zz)
+	     (draw-button-shape ww hh zz
+				'(0.5 0.5 0.5 1) '(0.75 0.75 0.75 1))
+	     (gl:with-pushed-matrix
+	       (gl:translate 5 5 0)
+	       (gl:line-width 1)
+	       (gl:color 1 1 1 0.2)
+	       (draw-box (- ww 10) (- hh 10)))
+	     (gl:color 0.0 0.0 0.0 1.0)
+	     (gl:line-width 2.0)
+	     (draw-box ww hh)))
+
+    (let ((ww (woolly:width button))
+	  (hh (woolly:height button)))
+      (gl:with-pushed-matrix
+	  (gl:translate (woolly:offset-x button) (woolly:offset-y button) 0)
+	(gl:with-pushed-attrib (:current-bit :line-bit :polygon-bit)
+	  (draw-button ww hh 1.0))
+	(gl:color 0 0 0 1)
+	(woolly:draw-string (woolly:font button) (woolly:label button)
+			    :xx (/ ww 2) :yy (/ hh 2) :centered t)))))
