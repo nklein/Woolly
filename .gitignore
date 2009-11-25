@@ -2,3 +2,5 @@ woolly/cmu-20a*
 woolly/sbcl-*
 woolly-gl/cmu-20a*
 woolly-gl/sbcl-*
+woolly/allegro-8.1*
+woolly-gl/allegro-8.1*
