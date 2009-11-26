@@ -15,7 +15,7 @@
 (sheeple:defproto =window= (woolly:=window=)
   (gl-window))
 
-(sheeple:defreply sheeple:init-object :after ((ww =window=)
+(sheeple:defreply sheeple:init-object :before ((ww =window=)
 					      &key width
 					           height
 					           title
@@ -78,7 +78,21 @@
   (gl:matrix-mode :projection)
   (gl:load-identity)
   (gl:matrix-mode :modelview)
-  (gl:load-identity))
+  (gl:load-identity)
+  (gl:enable :blend)
+  (gl:blend-func :src-alpha :one-minus-src-alpha)
+  (gl:enable :normalize)
+  (gl:enable :rescale-normal)
+  (gl:enable :lighting)
+  (gl:enable :light0)
+  (gl:enable :color-material)
+  (gl:shade-model :smooth)
+  (gl:light-model :light-model-local-viewer nil)
+  (gl:color-material :front-and-back :ambient-and-diffuse)
+  (gl:light :light0 :position #(-3 6 9 0))
+  (gl:light :light0 :ambient #(0.0 0.0 0.0 1.0))
+  (gl:light :light0 :diffuse #(0.85 0.85 0.8 1.0))
+  (gl:light :light0 :specular #(1 1 0.9 1)))
 
 (defmethod glut:display ((w woolly-window-gl))
   (gl:clear :color-buffer-bit)
@@ -91,24 +105,27 @@
   (gl:viewport 0 0 width height)
   (gl:matrix-mode :projection)
   (gl:load-identity)
-  (gl:ortho 0 width 0 height -100 100)
+  (with-slots (object) w
+    (let ((target-width (woolly:width object))
+	  (target-height (woolly:height object)))
+      (cond
+	((or (zerop target-width) (zerop target-height))
+	   (format t "Bad width and height!"))
+	((< (* width target-height) (* height target-width))
+	   (let ((y-offset (/ (- target-height (* target-width
+						  (/ height width)))
+			      2)))
+	     (gl:ortho 0 target-width
+		       y-offset (- target-height y-offset)
+		       -100 100)))
+	(t  (let ((x-offset (/ (- target-width (* target-height
+						  (/ width height)))
+			       2)))
+	      (gl:ortho x-offset (- target-width x-offset)
+			0 target-height
+			-100 100))))))
   (gl:matrix-mode :modelview)
-  (gl:load-identity)
-  (gl:enable :blend)
-  (gl:blend-func :src-alpha :one-minus-src-alpha)
-  (gl:enable :normalize)
-  (gl:enable :rescale-normal)
-  (gl:enable :lighting)
-  (gl:enable :light0)
-  (gl:enable :color-material)
-  (gl:shade-model :smooth)
-  ;(gl:light-model :light-model-two-side nil)
-  (gl:light-model :light-model-local-viewer nil)
-  (gl:color-material :front-and-back :ambient-and-diffuse)
-  (gl:light :light0 :position #(-3 6 9 0))
-  (gl:light :light0 :ambient #(0.0 0.0 0.0 1.0))
-  (gl:light :light0 :diffuse #(0.85 0.85 0.8 1.0))
-  (gl:light :light0 :specular #(1 1 0.9 1)))
+  (gl:load-identity))
 
 #|
 (defmethod glut:visibility ((w woolly-window-gl) state)
@@ -124,8 +141,10 @@
     ((eql key #\z) (woolly:destroy-window (slot-value w 'object)))))
 
 (defmethod glut:mouse ((w woolly-window-gl) button state xx yy)
-  (with-slots (object) w
-    (cond
-      ((eq state :down) (woolly:mouse-down object button xx yy))
-      ((eq state :up)   (woolly:mouse-up object button xx yy))))
-  (glut:post-redisplay))
+  (multiple-value-bind (xx yy zz) (glu:un-project xx yy 0)
+    (declare (ignore zz))
+    (with-slots (object) w
+      (cond
+	((eq state :down) (woolly:mouse-down object button xx yy))
+	((eq state :up)   (woolly:mouse-up object button xx yy))))
+    (glut:post-redisplay)))
