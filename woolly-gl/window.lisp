@@ -54,15 +54,15 @@
       (glut:destroy-window (glut:id ww))
       (setf (gl-window woolly-window) nil))))
 
-(sheeple:defreply woolly:mousedown :around ((woolly-window =window=)
-					    button xx yy)
+(sheeple:defreply woolly:mouse-down :around ((woolly-window =window=)
+					     button xx yy)
   (sheeple:call-next-reply woolly-window
 			   button
 			   xx
 			   (- (woolly:height woolly-window) yy 1)))
 
-(sheeple:defreply woolly:mouseup :around ((woolly-window =window=)
-					  button xx yy)
+(sheeple:defreply woolly:mouse-up :around ((woolly-window =window=)
+					   button xx yy)
   (sheeple:call-next-reply woolly-window
 			   button
 			   xx
@@ -126,6 +126,6 @@
 (defmethod glut:mouse ((w woolly-window-gl) button state xx yy)
   (with-slots (object) w
     (cond
-      ((eq state :down) (woolly:mousedown object button xx yy))
-      ((eq state :up)   (woolly:mouseup object button xx yy))))
+      ((eq state :down) (woolly:mouse-down object button xx yy))
+      ((eq state :up)   (woolly:mouse-up object button xx yy))))
   (glut:post-redisplay))

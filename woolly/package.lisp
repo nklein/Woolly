@@ -15,13 +15,14 @@
 	      #:height
 	      #:font
 	      #:draw
-	      #:mousedown
-	      #:mouseup
+	      #:mouse-down
+	      #:mouse-up
            #:=container=
 	      #:children
 	      #:add
 	   #:=button=
 	      #:label
+	      #:clicked
 	   #:=window=
 	      #:title
 	      #:display-window

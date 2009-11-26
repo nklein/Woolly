@@ -3,11 +3,16 @@
 (sheeple:defproto =button= (=widget= woolly:=button=)
   (pressed))
 
-(sheeple:defreply woolly:mousedown :around ((button =button=) mb xx yy)
+(sheeple:defreply sheeple:init-object :after ((bb =button=)
+					      &key
+					      &allow-other-keys)
+  (setf (pressed bb) nil))
+
+(sheeple:defreply woolly:mouse-down :around ((button =button=) mb xx yy)
   (setf (pressed button) (sheeple:call-next-reply))
   (pressed button))
 
-(sheeple:defreply woolly:mouseup :before ((button =button=) mb xx yy)
+(sheeple:defreply woolly:mouse-up :before ((button =button=) mb xx yy)
   (setf (pressed button) nil))
 
 (defun color (r g b &optional (a 1.0))

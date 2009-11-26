@@ -17,29 +17,24 @@
 			       :title "Woolly Window 1"
 			       :width 480
 			       :height 320))
-	  (but (sheeple:object :parents toolkit:=button=
-			       :offset-x 10
-			       :offset-y 10
-			       :width 100
-			       :height 40
-			       :label "Button")))
-      (sheeple:defreply woolly:mouseup :around ((bb but) mouse-button xx yy)
-	 (when (sheeple:call-next-reply)
-	   (format t "BUTTON CLICKED!~%")
-	   t))
+	  (default-button (sheeple:object :parents toolkit:=button=
+					  :offset-x 10
+					  :offset-y 10
+					  :width 100
+					  :height 40)))
 	 
       (woolly:display-window win)
-      (woolly:add win but)
-      (woolly:add win (sheeple:object :parents but
+      (woolly:add win (sheeple:object :parents default-button
+				      :label "Green"))
+      (woolly:add win (sheeple:object :parents default-button
 				      :offset-x 120
-				      :label "Next Button"))
+				      :label "Blue"))
 
-      (let ((quit-button (sheeple:object :parents but
+      (let ((quit-button (sheeple:object :parents default-button
 					 :offset-x 370
 					 :label "Quit")))
-	(sheeple:defreply woolly:mouseup :around ((bb quit-button) mb xx yy)
-	   (when (sheeple:call-next-reply)
-	     (woolly:exit-main-loop app)))
+	(sheeple:defreply woolly:clicked :after ((bb quit-button) mb xx yy)
+	   (woolly:exit-main-loop app))
 	(woolly:add win quit-button))
 
       (woolly:main-loop app))))

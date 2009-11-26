@@ -24,16 +24,16 @@
 (sheeple:defmessage draw (item)
   (:documentation "Render the ITEM"))
 
-(sheeple:defmessage mousedown (widget button xx yy)
-  (:documentation "Record a mousedown event for the mouse-button BUTTON at position (XX,YY) within the WIDGET.  The method should return NIL if the widget didn't want the event."))
+(sheeple:defmessage mouse-down (widget button xx yy)
+  (:documentation "Record a mouse-down event for the mouse-button BUTTON at position (XX,YY) within the WIDGET.  The method should return NIL if the widget didn't want the event."))
 
-(sheeple:defmessage mouseup (widget button xx yy)
-  (:documentation "Record a mouseup event for the mouse-button BUTTON at position (XX,YY) within the WIDGET.  The method should return NIL if the widget didn't want the event."))
+(sheeple:defmessage mouse-up (widget button xx yy)
+  (:documentation "Record a mouse-up event for the mouse-button BUTTON at position (XX,YY) within the WIDGET.  The method should return NIL if the widget didn't want the event."))
 
-(sheeple:defreply mousedown ((widget =widget=) button xx yy)
+(sheeple:defreply mouse-down ((widget =widget=) button xx yy)
   (declare (ignore widget button xx yy))
   nil)
 
-(sheeple:defreply mouseup ((widget =widget=) button xx yy)
+(sheeple:defreply mouse-up ((widget =widget=) button xx yy)
   (declare (ignore widget button xx yy))
   nil)
