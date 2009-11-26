@@ -2,15 +2,12 @@
 (in-package #:woolly)
 
 (sheeple:defproto =button= (=widget=)
-  (font
-   label))
+  (label))
 
 (sheeple:defreply sheeple:init-object :after ((button =button=)
-					      &key (font (font button))
-					           (label (label button))
+					      &key label
 					      &allow-other-keys)
-  (setf (font button) font
-	(label button) label))
+  (set? (label button) label))
 
 (sheeple:defreply mousedown ((button =button=) mouse-button xx yy)
   (declare (ignore button mouse-button xx yy))

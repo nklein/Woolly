@@ -12,7 +12,9 @@
 			        :depends-on ("package"))
 		               (:file "app"
 			        :depends-on ("package"))
+		               (:file "widget"
+			        :depends-on ("package"))
 			       (:file "button"
-				:depends-on ("package" "font" "utils"))
+				:depends-on ("package" "widget" "utils"))
 			       (:file "window"
 				:depends-on ("package"))))))

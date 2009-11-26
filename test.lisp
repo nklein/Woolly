@@ -4,20 +4,24 @@
 (rename-package 'woolly-gl 'toolkit)
 
 (defun test ()
-  (let ((font (sheeple:object :parents toolkit:=font=
-			      :em-size 48
-			      :pathname "okolaks/okolaksRegular.ttf")))
+  (let ((font "okolaks/okolaksRegular.ttf")
+	(font-size 20))
+
+    ;; prepare the default font...
+    (setf (woolly:font woolly:=widget=) (sheeple:object :parents toolkit:=font=
+							:em-size font-size
+							:pathname font))
+
     (let ((app (sheeple:object :parents toolkit:=app=))
 	  (win (sheeple:object :parents toolkit:=window=
 			       :title "Woolly Window 1"
-			       :width 640
-			       :height 480))
+			       :width 480
+			       :height 320))
 	  (but (sheeple:object :parents toolkit:=button=
-			       :offset-x 15
-			       :offset-y 360
-			       :width 300
-			       :height 100
-			       :font font
+			       :offset-x 50
+			       :offset-y 10
+			       :width 100
+			       :height 40
 			       :label "Button")))
       (sheeple:defreply woolly:mouseup :around ((bb but) mouse-button xx yy)
 	 (when (sheeple:call-next-reply)
@@ -27,7 +31,7 @@
       (woolly:display-window win)
       (woolly:add win but)
       (woolly:add win (sheeple:object :parents but
-				      :offset-x 325
+				      :offset-x 170
 				      :label "Button #2"))
       (woolly:main-loop app)
       (woolly:destroy-window win))))

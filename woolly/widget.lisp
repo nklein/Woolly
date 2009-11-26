@@ -5,18 +5,21 @@
   ((offset-x 0)
    (offset-y 0)
    (width 100)
-   (height 100)))
+   (height 100)
+   (font :not-a-font)))
 
-(sheeple:defreply sheeple:init-object :after ((ww woolly:=widget=)
-					      &key (offset-x (offset-x ww))
-					           (offset-y (offset-y ww))
-					           (width (width ww))
-					           (height (height ww))
+(sheeple:defreply sheeple:init-object :after ((ww =widget=)
+					      &key offset-x
+					           offset-y
+					           width
+					           height
+					           font
 					      &allow-other-keys)
-  (setf (offset-x ww) offset-x
+  (set? (offset-x ww) offset-x
 	(offset-y ww) offset-y
 	(width ww) width
-	(height ww) height))
+	(height ww) height
+	(font ww) font))
 
 (sheeple:defmessage draw (item)
   (:documentation "Render the ITEM"))

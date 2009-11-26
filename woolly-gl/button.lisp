@@ -1,6 +1,6 @@
 (in-package #:woolly-gl)
 
-(sheeple:defproto =button= (woolly:=button=)
+(sheeple:defproto =button= (=widget= woolly:=button=)
   (pressed))
 
 (sheeple:defreply woolly:mousedown :around ((button =button=) mb xx yy)
@@ -72,11 +72,20 @@
 
     (let ((ww (woolly:width button))
 	  (hh (woolly:height button)))
-      (gl:with-pushed-matrix
-	  (gl:translate (woolly:offset-x button) (woolly:offset-y button) 0)
-	(gl:with-pushed-attrib (:current-bit :line-bit :polygon-bit)
-	  (draw-button ww hh (if (pressed button) -5 5)))
-	(gl:color 0 0 0 1)
+      (gl:with-pushed-attrib (:current-bit :line-bit :polygon-bit)
+	(draw-button ww hh (if (pressed button) -5 5)))
+      (gl:color 0 0 0 1)
+      (gl:with-pushed-attrib (:transform-bit)
+	(gl:enable :clip-plane0)
+	(gl:clip-plane :clip-plane0 #(1 0 0 -5))
+	(gl:enable :clip-plane1)
+	(gl:clip-plane :clip-plane1 (vector -1 0 0
+					    (- (woolly:width button)	5)))
+	(gl:enable :clip-plane2)
+	(gl:clip-plane :clip-plane2 #(0 1 0 -5))
+	(gl:enable :clip-plane3)
+	(gl:clip-plane :clip-plane3 (vector 0 -1 0
+					    (- (woolly:height button) 5)))
 	(when (pressed button)
 	  (gl:translate 1.5 -3 0))
 	(woolly:draw-string (woolly:font button) (woolly:label button)

@@ -10,12 +10,12 @@
   (:reply (f p) (error "No way to open a font on (~S,~S)" f p)))
 
 (sheeple:defreply sheeple:init-object :after ((font =font=)
-					      &key (em-size (em-size font))
+					      &key em-size
 					           pathname
 					      &allow-other-keys)
   (when pathname
     (open-font font pathname))
-  (setf (em-size font) em-size)
+  (set? (em-size font) em-size)
   font)
 
 (sheeple:defreply open-font ((font =font=) pathname)

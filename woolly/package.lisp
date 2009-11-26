@@ -1,6 +1,7 @@
 (defpackage #:woolly
   (:use #:cl)
-  (:export #:=app=
+  (:export #:set?
+	   #:=app=
 	      #:main-loop
 	   #:=font=
 	      #:em-size
@@ -11,6 +12,7 @@
 	      #:offset-y
 	      #:width
 	      #:height
+	      #:font
 	      #:draw
 	      #:mousedown
 	      #:mouseup
@@ -18,7 +20,6 @@
 	      #:children
 	      #:add
 	   #:=button=
-	      #:font
 	      #:label
 	   #:=window=
 	      #:title

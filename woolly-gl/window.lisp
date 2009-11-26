@@ -21,13 +21,14 @@
   (gl-window))
 
 (sheeple:defreply sheeple:init-object :after ((ww =window=)
-					      &key (width (woolly:width ww))
-					           (height (woolly:height ww))
-					           (title  (woolly:title ww)))
-  (setf (woolly:width ww) width
-	(woolly:height ww) height
-	(woolly:title ww) title
-	(gl-window ww) (make-instance 'woolly-window-gl
+					      &key width
+					           height
+					           title
+                                              &allow-other-keys)
+  (woolly:set? (woolly:width ww) width
+	       (woolly:height ww) height
+	       (woolly:title ww) title)
+  (setf	(gl-window ww) (make-instance 'woolly-window-gl
 				      :object ww
 				      :width  width
 				      :height height
