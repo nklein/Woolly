@@ -13,7 +13,7 @@
   (:default-initargs :width 640
                      :height 480
 		     :title "Woolly"
-		     :mode '(:single :rgba :alpha :stencil)))
+		     :mode '(:double :rgba :alpha :stencil)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -88,7 +88,8 @@
   (gl:clear :color-buffer-bit)
   (with-slots (object) w
     (woolly:draw object))
-  (gl:flush))
+  (gl:flush)
+  (glut:swap-buffers))
 
 (defmethod glut:reshape ((w woolly-window-gl) width height)
   (gl:viewport 0 0 width height)
