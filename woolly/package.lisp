@@ -3,6 +3,7 @@
   (:export #:set?
 	   #:=app=
 	      #:main-loop
+	      #:exit-main-loop
 	   #:=font=
 	      #:em-size
 	      #:zpb-font-loader

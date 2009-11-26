@@ -3,6 +3,7 @@
   (:export #:=app=
 	   #:=font=
 	   #:=button=
-	   #:=window=))
+	   #:=window=
+	      #:exit-main-loop))
 
 (in-package #:woolly-gl)

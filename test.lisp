@@ -18,7 +18,7 @@
 			       :width 480
 			       :height 320))
 	  (but (sheeple:object :parents toolkit:=button=
-			       :offset-x 50
+			       :offset-x 10
 			       :offset-y 10
 			       :width 100
 			       :height 40
@@ -31,7 +31,15 @@
       (woolly:display-window win)
       (woolly:add win but)
       (woolly:add win (sheeple:object :parents but
-				      :offset-x 170
-				      :label "Button #2"))
-      (woolly:main-loop app)
-      (woolly:destroy-window win))))
+				      :offset-x 120
+				      :label "Next Button"))
+
+      (let ((quit-button (sheeple:object :parents but
+					 :offset-x 370
+					 :label "Quit")))
+	(sheeple:defreply woolly:mouseup :around ((bb quit-button) mb xx yy)
+	   (when (sheeple:call-next-reply)
+	     (woolly:exit-main-loop app)))
+	(woolly:add win quit-button))
+
+      (woolly:main-loop app))))

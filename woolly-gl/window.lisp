@@ -2,11 +2,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define-condition exit-main-loop-condition (condition)
-  ())
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (defclass woolly-window-gl (glut:window)
   ((object :initarg :object
 	   :initform (error "Must attach to a woolly-gl:=window=")))
@@ -122,11 +117,9 @@
     (t        (glut:disable-event w :idle))))
 |#
 
-
 (defmethod glut:keyboard ((w woolly-window-gl) key xx yy)
   (declare (ignore xx yy))
   (cond
-    ((eql key #\q) (error 'exit-main-loop-condition))
     ((eql key #\p) (describe w))
     ((eql key #\z) (woolly:destroy-window (slot-value w 'object)))))
 
