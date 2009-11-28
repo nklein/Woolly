@@ -3,6 +3,7 @@
   (:export #:=app=
 	   #:=font=
 	   #:=button=
+	   #:=subwindow=
 	   #:=window=
 	      #:exit-main-loop))
 

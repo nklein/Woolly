@@ -6,22 +6,12 @@
     :depends-on (#:sheeple #:zpb-ttf)
     :components ((:module "woolly"
 		  :components ((:file "package")
-		               (:file "utils"
-			        :depends-on ("package"))
-			       (:file "font"
-				:depends-on ("package" "utils"))
-		               (:file "app"
-			        :depends-on ("package" "utils"))
-			       (:file "widget"
-				:depends-on ("package" "utils"
-						       "font"))
-		               (:file "container"
-			        :depends-on ("package" "utils"
-						       "widget"))
-			       (:file "button"
-				:depends-on ("package" "utils"
-						       "widget"
-						       "font"))
-			       (:file "window"
-				:depends-on ("package" "utils"
-						       "container"))))))
+		               (:file "utils"     :depends-on ("package"))
+			       (:file "font"      :depends-on ("utils"))
+		               (:file "app"       :depends-on ("utils"))
+			       (:file "widget"    :depends-on ("font"))
+			       (:file "button"    :depends-on ("widget"))
+		               (:file "container" :depends-on ("widget"))
+			       (:file "subwindow" :depends-on ("container"))
+			       (:file "window"    :depends-on ("container")))
+		  )))

@@ -68,6 +68,12 @@
 			   xx
 			   (- (woolly:height woolly-window) yy 1)))
 
+(sheeple:defreply woolly:mouse-move :around ((woolly-window =window=)
+					     xx yy)
+  (sheeple:call-next-reply woolly-window
+			   xx
+			   (- (woolly:height woolly-window) yy 1)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defmethod glut:display-window :before ((w woolly-window-gl))
@@ -148,3 +154,10 @@
 	((eq state :down) (woolly:mouse-down object button xx yy))
 	((eq state :up)   (woolly:mouse-up object button xx yy))))
     (glut:post-redisplay)))
+
+(defmethod glut:motion ((w woolly-window-gl) xx yy)
+  (multiple-value-bind (xx yy zz) (glu:un-project xx yy 0)
+    (declare (ignore zz))
+    (with-slots (object) w
+      (when (woolly:mouse-move object xx yy)
+	(glut:post-redisplay)))))

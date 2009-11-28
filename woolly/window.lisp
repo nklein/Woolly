@@ -2,9 +2,7 @@
 (in-package #:woolly)
 
 (sheeple:defproto =window= (=container=)
-  ((title "Woolly")
-   (width 640)
-   (height 480)))
+  ((title "Woolly")))
 
 (sheeple:defmessage display-window (w)
   (:documentation "Makes the window W visible and active")

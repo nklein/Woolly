@@ -15,9 +15,6 @@
 (sheeple:defreply woolly:mouse-up :before ((button =button=) mb xx yy)
   (setf (pressed button) nil))
 
-(defun color (r g b &optional (a 1.0))
-  (gl:color r g b a))
-
 (sheeple:defreply woolly:draw ((button =button=))
   (labels ((draw-button-shape (ww hh zz &optional color1 color2)
 	     (let ((dx (min 5 (/ ww 2)))

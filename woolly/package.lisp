@@ -15,8 +15,10 @@
 	      #:height
 	      #:font
 	      #:draw
+	      #:floating
 	      #:mouse-down
 	      #:mouse-up
+	      #:mouse-move
            #:=container=
 	      #:children
 	      #:add
@@ -26,6 +28,9 @@
 	   #:=window=
 	      #:title
 	      #:display-window
-	      #:destroy-window))
+	      #:destroy-window
+	   #:=subwindow=
+	      #:closed
+	      #:dragging))
 
 (in-package #:woolly)

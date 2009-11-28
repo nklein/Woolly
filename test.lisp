@@ -19,7 +19,7 @@
 			       :height 320))
 	  (default-button (sheeple:object :parents toolkit:=button=
 					  :offset-x 10
-					  :offset-y 10
+					  :offset-y 260
 					  :width 100
 					  :height 40)))
 	 
@@ -30,11 +30,19 @@
 				      :offset-x 120
 				      :label "Blue"))
 
-      (let ((quit-button (sheeple:object :parents default-button
-					 :offset-x 370
+      (let ((sub (sheeple:object :parents toolkit:=subwindow=
+				 :offset-x 10
+				 :offset-y 40
+				 :width 210
+				 :height 200))
+	    (quit-button (sheeple:object :parents default-button
+					 :offset-y 10
 					 :label "Quit")))
+
 	(sheeple:defreply woolly:clicked :after ((bb quit-button) mb xx yy)
 	   (woolly:exit-main-loop app))
-	(woolly:add win quit-button))
+
+	(woolly:add sub quit-button)
+	(woolly:add win sub))
 
       (woolly:main-loop app))))
