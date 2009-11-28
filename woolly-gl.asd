@@ -9,10 +9,8 @@
 		               (:file "utils"     :depends-on ("package"))
 		               (:file "font"      :depends-on ("package"))
 		               (:file "app"       :depends-on ("package"))
-		               (:file "widget"    :depends-on ("package"))
-			       (:file "button"	  :depends-on ("widget"
-							      "utils"))
-			       (:file "subwindow" :depends-on ("widget"
-							       "utils"))
+		               (:file "widget"    :depends-on ("utils"))
+			       (:file "button"	  :depends-on ("utils"))
+			       (:file "subwindow" :depends-on ("utils"))
 			       (:file "window"    :depends-on ("package")))
 		  )))
