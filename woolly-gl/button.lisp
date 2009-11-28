@@ -79,16 +79,7 @@
       (gl:color 0 0 0 1)
       (when (pressed button)
 	(gl:translate 1.5 -3 0))
-      (gl:with-pushed-attrib (:transform-bit)
-	(gl:enable :clip-plane0)
-	(gl:clip-plane :clip-plane0 #(1 0 0 -5))
-	(gl:enable :clip-plane1)
-	(gl:clip-plane :clip-plane1 (vector -1 0 0
-					    (- (woolly:width button)	5)))
-	(gl:enable :clip-plane2)
-	(gl:clip-plane :clip-plane2 #(0 1 0 -5))
-	(gl:enable :clip-plane3)
-	(gl:clip-plane :clip-plane3 (vector 0 -1 0
-					    (- (woolly:height button) 5)))
+      (with-clip-to (5 5 (- (woolly:width button) 5)
+		         (- (woolly:height button) 5))
 	(woolly:draw-string (woolly:font button) (woolly:label button)
 			    :xx (/ ww 2) :yy (/ hh 2) :centered t)))))

@@ -5,11 +5,17 @@
 
 (defun test ()
   (let ((font "okolaks/okolaksRegular.ttf")
-	(font-size 20))
+	(font-size 20)
+	(sub-font-size 12))
 
     ;; prepare the default font...
     (setf (woolly:font woolly:=widget=) (sheeple:object :parents toolkit:=font=
 							:em-size font-size
+							:pathname font))
+
+    (setf (woolly:font woolly:=subwindow=)
+	                                (sheeple:object :parents toolkit:=font=
+							:em-size sub-font-size
 							:pathname font))
 
     (let ((app (sheeple:object :parents toolkit:=app=))
@@ -24,13 +30,12 @@
 					  :height 40)))
 	 
       (woolly:display-window win)
+
       (woolly:add win (sheeple:object :parents default-button
 				      :label "Green"))
-      (woolly:add win (sheeple:object :parents default-button
-				      :offset-x 120
-				      :label "Blue"))
 
       (let ((sub (sheeple:object :parents toolkit:=subwindow=
+				 :title "This Is My SubWindow!"
 				 :offset-x 10
 				 :offset-y 40
 				 :width 210
@@ -44,5 +49,9 @@
 
 	(woolly:add sub quit-button)
 	(woolly:add win sub))
+
+      (woolly:add win (sheeple:object :parents default-button
+				      :offset-x 120
+				      :label "Blue"))
 
       (woolly:main-loop app))))

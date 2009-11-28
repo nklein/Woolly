@@ -6,6 +6,14 @@
    closed
    dragging))
 
+(sheeple:defreply sheeple:init-object :after ((ss =subwindow=)
+					      &key title
+					           closed
+					      &allow-other-keys)
+  (set? (woolly:title ss) title
+        (woolly:closed ss) closed)
+  (setf (woolly:dragging ss) nil))
+
 (sheeple:defreply floating ((item =subwindow=))
   (declare (ignore item))
   t)
