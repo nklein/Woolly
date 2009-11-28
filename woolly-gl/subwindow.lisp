@@ -15,9 +15,7 @@
       ;; in drag bar
       ((and (< -1 xx (- ww 20))
 	    (< (- hh 21) yy hh))  (setf (woolly:dragging ss)
-					(cons xx yy))
-                                  (format t "~S~%" (woolly:dragging ss))
-                                  t)
+					(cons xx yy)))
 
       ;; in iconify region
       ((and (< (- ww 21) xx ww)
