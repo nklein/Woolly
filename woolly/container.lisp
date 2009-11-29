@@ -9,6 +9,7 @@
   (:documentation "Add the WIDGET to the given CONTAINER"))
 
 (sheeple:defreply add ((container =container=) (widget =widget=))
+  (setf (parent widget) container)
   (pushnew widget (children container)))
 
 (defun put-floating-first (children)

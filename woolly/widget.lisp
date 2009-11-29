@@ -6,7 +6,8 @@
    (offset-y 0)
    (width 100)
    (height 100)
-   (font :not-a-font)))
+   (font :not-a-font)
+   parent))
 
 (sheeple:defreply sheeple:init-object :after ((ww =widget=)
 					      &key offset-x
@@ -14,12 +15,14 @@
 					           width
 					           height
 					           font
+					           parent
 					      &allow-other-keys)
   (set? (offset-x ww) offset-x
 	(offset-y ww) offset-y
 	(width ww) width
 	(height ww) height
-	(font ww) font))
+        (font ww) font
+	(parent ww) parent))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
