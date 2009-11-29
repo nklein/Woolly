@@ -1,11 +1,21 @@
 (in-package #:woolly-gl)
 
 (sheeple:defproto =subwindow= (=widget= woolly:=subwindow=)
-  ())
+  (mouse-down-in-main-body))
+
+(sheeple:defreply sheeple:init-object :after ((ss =subwindow=)
+					      &key &allow-other-keys)
+  (let ((ww (woolly:width ss))
+	(hh (woolly:height ss))
+	(cc (woolly:container ss)))
+    (setf (woolly:width cc) ww
+	  (woolly:height cc) (max (- hh 20) 0)
+	  (mouse-down-in-main-body ss) nil)))
 
 (sheeple:defreply woolly:mouse-down :around ((ss =subwindow=) mb xx yy)
   (let ((ww (woolly:width ss))
 	(hh (woolly:height ss)))
+    (setf (mouse-down-in-main-body ss) nil)
     (cond
       ;; in drag bar
       ((and (< -1 xx (- ww 20))
@@ -21,14 +31,30 @@
       ;; in main body
       ((and (not (woolly:closed ss))
 	    (< -1 xx ww)
-	    (< -1 yy (- hh 20)))  (sheeple:call-next-reply)
-                                  t)
+	    (< -1 yy (- hh 20)))  (setf (mouse-down-in-main-body ss)
+					(woolly:mouse-down
+					            (woolly:container ss)
+						    mb xx yy)))
 
       ;; missed entirely
       (t nil))))
 
-(sheeple:defreply woolly:mouse-up :before ((ss =subwindow=) mb xx yy)
-  (setf (woolly:dragging ss) nil))
+(sheeple:defreply woolly:mouse-up :after ((ss =subwindow=) mb xx yy)
+  (setf (woolly:dragging ss) nil
+	(mouse-down-in-main-body ss) nil))
+
+(sheeple:defreply woolly:mouse-up :around ((ss =subwindow=) mb xx yy)
+  (cond
+    ((mouse-down-in-main-body ss) (setf (mouse-down-in-main-body ss) nil)
+                                  (woolly:mouse-up (woolly:container ss)
+						   mb xx yy))
+    (t (sheeple:call-next-reply))))
+
+(sheeple:defreply woolly:mouse-move :around ((ss =subwindow=) xx yy)
+  (cond
+    ((mouse-down-in-main-body ss) (woolly:mouse-move (woolly:container ss)
+						     xx yy))
+    (t (sheeple:call-next-reply))))
 
 (sheeple:defreply woolly:draw ((ss =subwindow=))
   (let ((ww (woolly:width ss))
@@ -46,4 +72,4 @@
       (draw-filled-box ww (- hh 20) '(0.25 0.25 0.25 0.95) '(0.5 0.5 0.5 0.8))
 
       (with-clip-to (0 0 ww (- hh 20))
-	(mapc #'(lambda (item) (woolly:draw item)) (woolly:children ss))))))
+	(woolly:draw (woolly:container ss))))))

@@ -45,7 +45,8 @@
 		   (kid (propagate (rest kids) button xx yy))))))
 
     (setf (mouse-active container) nil)
-    (propagate (put-floating-first (children container)) button xx yy)))
+    (propagate (put-floating-first (children container)) button xx yy))
+  t)
 
 (sheeple:defreply mouse-up ((container =container=) button xx yy)
   "For a CONTAINER getting a mouseup event, it has to see if one of its members accepted the mousedown event.  The container will only accept the mouseup event if a member accepted the mousedown event and that same member accepts the mouseup event."

@@ -31,6 +31,7 @@
 	      #:destroy-window
 	   #:=subwindow=
 	      #:closed
-	      #:dragging))
+	      #:dragging
+	      #:container))
 
 (in-package #:woolly)

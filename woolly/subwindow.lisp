@@ -1,23 +1,33 @@
 
 (in-package #:woolly)
 
-(sheeple:defproto =subwindow= (=container=)
+(sheeple:defproto =subwindow= (=widget=)
   ((title "Little Woolly")
    closed
-   dragging))
+   dragging
+   container))
 
 (sheeple:defreply sheeple:init-object :after ((ss =subwindow=)
 					      &key title
 					           closed
 					      &allow-other-keys)
-  (set? (woolly:title ss) title
-        (woolly:closed ss) closed)
-  (setf (woolly:dragging ss) nil))
+  (set? (title ss) title
+        (closed ss) closed)
+  (setf (dragging ss) nil
+	(container ss) (sheeple:object :parents =container=)))
 
 (sheeple:defreply floating ((item =subwindow=))
   (declare (ignore item))
   t)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(sheeple:defreply add ((ss =subwindow=) (widget =widget=))
+  (add (container ss) widget))
+
+(sheeple:defreply children ((ss =subwindow=))
+  (children (container ss)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (sheeple:defreply mouse-move ((item =subwindow=) xx yy)
   (let ((dragging (dragging item)))
     (when dragging

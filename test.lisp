@@ -48,6 +48,12 @@
 	   (woolly:exit-main-loop app))
 
 	(woolly:add sub quit-button)
+	(woolly:add sub (sheeple:object :parents toolkit:=subwindow=
+					:title "Small"
+					:offset-x 10
+					:offset-y 60
+					:width 100
+					:height 80))
 	(woolly:add win sub))
 
       (woolly:add win (sheeple:object :parents default-button
