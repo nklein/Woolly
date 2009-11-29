@@ -27,16 +27,6 @@
 (sheeple:defreply children ((ss =subwindow=))
   (children (container ss)))
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(sheeple:defreply (setf woolly:width) :after ((ss =subwindow=) ww)
-  (let ((cc (container ss)))
-    (when cc (setf (woolly:width cc) nw))))
-
-(sheeple:defreply (setf woolly:height) :after ((ss =subwindow=) hh)
-  (let ((cc (container ss)))
-    (when cc (setf (woolly:height cc) nh))))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (sheeple:defreply mouse-move ((item =subwindow=) xx yy)
   (let ((dragging (dragging item)))
@@ -45,6 +35,12 @@
 	    (dy (- yy (cdr dragging))))
 	(incf (offset-x item) dx)
 	(incf (offset-y item) dy))
+      (let ((pp (parent item)))
+	(when pp
+	  (when (< (width pp) (+ (offset-x item) (width item)))
+	    (setf (offset-x item) (- (width pp) (width item))))
+	  (when (< (height pp) (+ (offset-y item) (height item)))
+	    (setf (offset-y item) (- (height pp) (height item))))))
       (when (< (offset-x item) 0) (setf (offset-x item) 0))
       (when (< (offset-y item) 0) (setf (offset-y item) 0))
       t)))

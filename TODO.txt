@@ -1,6 +1,5 @@
 * Labels
 * Checkboxes
-* Subwindows -- need to stay confined to parent container
 * Panels
 * Borders
 * Drop-Down Menus

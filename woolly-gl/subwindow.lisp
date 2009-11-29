@@ -9,15 +9,15 @@
   (setf (mouse-down-in-main-body ss) nil))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(sheeple:defreply (setf woolly:width) :around ((ss =subwindow=) ww)
-  (sheeple:call-next-reply ss (max ww 20)))		  
+(sheeple:defreply (setf woolly:width) :around (ww (ss =subwindow=))
+  (sheeple:call-next-reply (max ww 20) ss))		  
 
-(sheeple:defreply (setf woolly:height) :around ((ss =subwindow=) hh)
-  (sheeple:call-next-reply ss (max hh 20)))		  
+(sheeple:defreply (setf woolly:height) :around (hh (ss =subwindow=))
+  (sheeple:call-next-reply (max hh 20) ss))		  
 
-(sheeple:defreply (setf woolly:container) :after ((ss =subwindow=) cc)
+(sheeple:defreply (setf woolly:container) :after (cc (ss =subwindow=))
   (when cc (setf (woolly:width cc) (woolly:width ss)
-		 (woolly:height cc) (- (woolly:height cc) 20))))
+		 (woolly:height cc) (- (woolly:height ss) 20))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (sheeple:defreply woolly:mouse-down :around ((ss =subwindow=) mb xx yy)
