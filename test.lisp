@@ -47,6 +47,8 @@
 	(sheeple:defreply woolly:clicked :after ((bb quit-button) mb xx yy)
 	   (woolly:exit-main-loop app))
 
+	(setf (woolly:width sub) 280)
+
 	(woolly:add sub quit-button)
 	(woolly:add sub (sheeple:object :parents toolkit:=subwindow=
 					:title "Small"

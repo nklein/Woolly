@@ -3,15 +3,23 @@
 (sheeple:defproto =subwindow= (=widget= woolly:=subwindow=)
   (mouse-down-in-main-body))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (sheeple:defreply sheeple:init-object :after ((ss =subwindow=)
 					      &key &allow-other-keys)
-  (let ((ww (woolly:width ss))
-	(hh (woolly:height ss))
-	(cc (woolly:container ss)))
-    (setf (woolly:width cc) ww
-	  (woolly:height cc) (max (- hh 20) 0)
-	  (mouse-down-in-main-body ss) nil)))
+  (setf (mouse-down-in-main-body ss) nil))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(sheeple:defreply (setf woolly:width) :around ((ss =subwindow=) ww)
+  (sheeple:call-next-reply ss (max ww 20)))		  
+
+(sheeple:defreply (setf woolly:height) :around ((ss =subwindow=) hh)
+  (sheeple:call-next-reply ss (max hh 20)))		  
+
+(sheeple:defreply (setf woolly:container) :after ((ss =subwindow=) cc)
+  (when cc (setf (woolly:width cc) (woolly:width ss)
+		 (woolly:height cc) (- (woolly:height cc) 20))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (sheeple:defreply woolly:mouse-down :around ((ss =subwindow=) mb xx yy)
   (let ((ww (woolly:width ss))
 	(hh (woolly:height ss)))
@@ -56,6 +64,7 @@
 						     xx yy))
     (t (sheeple:call-next-reply))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (sheeple:defreply woolly:draw ((ss =subwindow=))
   (let ((ww (woolly:width ss))
 	(hh (woolly:height ss)))
