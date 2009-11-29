@@ -19,8 +19,7 @@
   font)
 
 (sheeple:defreply open-font ((font =font=) pathname)
-  (setf (zpb-font-loader font) (zpb-ttf:open-font-loader pathname))
-  (format t "Opened font ~S: ~S~%" pathname (zpb-font-loader font)))
+  (setf (zpb-font-loader font) (zpb-ttf:open-font-loader pathname)))
 
 (sheeple:defmessage draw-string (font string &key xx yy centered)
   (:documentation "Tell FONT to render STRING.  The font baseline will begin at (XX,YY) when CENTERED is nil.  The rendered string will be centered at (XX,YY) when CENTERED is not nil.")
