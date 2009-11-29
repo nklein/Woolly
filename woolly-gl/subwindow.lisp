@@ -73,7 +73,8 @@
       (draw-bevel-box ww 20 2 t '(0.5 0.5 0.5) '(0.75 0.75 0.75))
       (with-clip-to (5 0 (- ww 30) hh)
 	(gl:color 0 0 0)
-	(woolly:draw-string (woolly:font ss) (woolly:title ss) :xx 5 :yy 5))
+	(woolly:draw-string (woolly:font ss) (woolly:title ss)
+			    :xx 5 :yy 10 :centered :vertical))
       (gl:translate (- ww 15) 5 0)
       (draw-bevel-box 10 10 2 (not (woolly:closed ss)) '(0.65 0.65 0.5)))
 

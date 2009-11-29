@@ -10,6 +10,7 @@
 			       (:file "font"      :depends-on ("utils"))
 		               (:file "app"       :depends-on ("utils"))
 			       (:file "widget"    :depends-on ("font"))
+			       (:file "label"     :depends-on ("widget"))
 			       (:file "button"    :depends-on ("widget"))
 		               (:file "container" :depends-on ("widget"))
 			       (:file "subwindow" :depends-on ("container"))

@@ -23,8 +23,9 @@
            #:=container=
 	      #:children
 	      #:add
-	   #:=button=
+	   #:=label=
 	      #:label
+	   #:=button=
 	      #:clicked
 	   #:=window=
 	      #:title

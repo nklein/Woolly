@@ -1,4 +1,3 @@
-* Labels
 * Checkboxes
 * Panels
 * Borders

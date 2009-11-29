@@ -64,4 +64,11 @@
 				      :offset-x 120
 				      :label "Blue"))
 
+      (woolly:add win (sheeple:object :parents toolkit:=label=
+				      :offset-x 230
+				      :offset-y 260
+				      :width 200
+				      :height 40
+				      :label "This is a label."))
+
       (woolly:main-loop app))))
