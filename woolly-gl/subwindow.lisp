@@ -70,15 +70,16 @@
 	(hh (woolly:height ss)))
     (gl:with-pushed-matrix
       (gl:translate 0 (- hh 20) 0)
-      (draw-filled-box (- ww 20) 20 '(0.5 0.5 0.5) '(0.75 0.75 0.75))
+      (draw-bevel-box (- ww 20) 20 2 t '(0.5 0.5 0.5) '(0.75 0.75 0.75))
       (with-clip-to (5 0 (- ww 30) hh)
 	(gl:color 0 0 0)
 	(woolly:draw-string (woolly:font ss) (woolly:title ss) :xx 5 :yy 5))
       (gl:translate (- ww 20) 0 0)
-      (draw-filled-box 20 20 '(0.75 0.75 0.5)))
+      (draw-bevel-box 20 20 2 (not (woolly:closed ss)) '(0.75 0.75 0.5)))
 
     (unless (woolly:closed ss)
-      (draw-filled-box ww (- hh 20) '(0.25 0.25 0.25 0.95) '(0.5 0.5 0.5 0.8))
+      (draw-bevel-box ww (- hh 20) 2 t
+		      '(0.25 0.25 0.25 0.95) '(0.5 0.5 0.5 0.8))
 
       (with-clip-to (0 0 ww (- hh 20))
 	(woolly:draw (woolly:container ss))))))
