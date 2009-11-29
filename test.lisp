@@ -4,7 +4,11 @@
 (rename-package 'woolly-gl 'toolkit)
 
 (defun test ()
-  (let ((font "okolaks/okolaksRegular.ttf")
+  (let ((font (asdf:component-pathname
+	          (asdf:find-component
+		      (asdf:find-component (asdf:find-system 'woolly nil)
+					   "okolaks")
+		      "okolaksRegular.ttf")))
 	(font-size 20)
 	(sub-font-size 12))
 

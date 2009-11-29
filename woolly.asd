@@ -13,5 +13,10 @@
 			       (:file "button"    :depends-on ("widget"))
 		               (:file "container" :depends-on ("widget"))
 			       (:file "subwindow" :depends-on ("container"))
-			       (:file "window"    :depends-on ("container")))
-		  )))
+			       (:file "window"    :depends-on ("container"))))
+		 (:module "okolaks"
+		  :components ((:static-file "OFL_FAQ.txt")
+			       (:static-file "OFL_License.txt")
+			       (:static-file "okolaksBold.ttf")
+			       (:static-file "okolaksBoldItalic.ttf")
+			       (:static-file "okolaksRegular.ttf")))))
