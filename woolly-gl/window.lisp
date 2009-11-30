@@ -25,8 +25,8 @@
 	       (woolly:title ww) title)
   (setf	(gl-window ww) (make-instance 'woolly-window-gl
 				      :object ww
-				      :width  width
-				      :height height
+				      :width  (woolly:width ww)
+				      :height (woolly:height ww)
 				      :title  title)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
