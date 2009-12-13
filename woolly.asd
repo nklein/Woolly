@@ -10,10 +10,12 @@
 			       (:file "font"      :depends-on ("utils"))
 		               (:file "app"       :depends-on ("utils"))
 			       (:file "widget"    :depends-on ("font"))
+			       (:file "draggable" :depends-on ("widget"))
 			       (:file "label"     :depends-on ("widget"))
 			       (:file "button"    :depends-on ("widget"))
 		               (:file "container" :depends-on ("widget"))
-			       (:file "subwindow" :depends-on ("container"))
+			       (:file "subwindow" :depends-on ("container"
+			                                       "draggable"))
 			       (:file "window"    :depends-on ("container"))))
 		 (:module "okolaks"
 		  :components ((:static-file "OFL_FAQ.txt")

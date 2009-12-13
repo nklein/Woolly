@@ -27,8 +27,7 @@
     (cond
       ;; in drag bar
       ((and (< -1 xx (- ww 20))
-	    (< (- hh 21) yy hh))  (setf (woolly:dragging ss)
-					(cons xx yy)))
+	    (< (- hh 21) yy hh))  (sheeple:call-next-reply))
 
       ;; in iconify region
       ((and (< (- ww 21) xx ww)

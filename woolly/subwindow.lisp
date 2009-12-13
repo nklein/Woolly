@@ -1,10 +1,9 @@
 
 (in-package #:woolly)
 
-(sheeple:defproto =subwindow= (=widget=)
+(sheeple:defproto =subwindow= (=draggable= =widget=)
   ((title "Little Woolly")
    closed
-   dragging
    container))
 
 (sheeple:defreply sheeple:init-object :after ((ss =subwindow=)
@@ -13,12 +12,7 @@
 					      &allow-other-keys)
   (set? (title ss) title
         (closed ss) closed)
-  (setf (dragging ss) nil
-	(container ss) (sheeple:object :parents =container=)))
-
-(sheeple:defreply floating ((item =subwindow=))
-  (declare (ignore item))
-  t)
+  (setf	(container ss) (sheeple:object :parents =container=)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (sheeple:defreply add ((ss =subwindow=) (widget =widget=))
@@ -26,21 +20,3 @@
 
 (sheeple:defreply children ((ss =subwindow=))
   (children (container ss)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(sheeple:defreply mouse-move ((item =subwindow=) xx yy)
-  (let ((dragging (dragging item)))
-    (when dragging
-      (let ((dx (- xx (car dragging)))
-	    (dy (- yy (cdr dragging))))
-	(incf (offset-x item) dx)
-	(incf (offset-y item) dy))
-      (let ((pp (parent item)))
-	(when pp
-	  (when (< (width pp) (+ (offset-x item) (width item)))
-	    (setf (offset-x item) (- (width pp) (width item))))
-	  (when (< (height pp) (+ (offset-y item) (height item)))
-	    (setf (offset-y item) (- (height pp) (height item))))))
-      (when (< (offset-x item) 0) (setf (offset-x item) 0))
-      (when (< (offset-y item) 0) (setf (offset-y item) 0))
-      t)))
