@@ -20,6 +20,7 @@
 	      #:mouse-up
 	      #:mouse-move
 	      #:parent
+	   #:=draggable=
            #:=container=
 	      #:children
 	      #:add

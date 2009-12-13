@@ -2,6 +2,7 @@
   (:use #:cl)
   (:export #:=app=
 	   #:=font=
+	   #:=widget=
 	   #:=label=
 	   #:=button=
 	   #:=subwindow=
