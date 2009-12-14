@@ -5,6 +5,7 @@
 	   #:=widget=
 	   #:=label=
 	   #:=button=
+	   #:=checkbox=
 	   #:=subwindow=
 	   #:=window=
 	      #:exit-main-loop))

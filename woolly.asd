@@ -13,6 +13,7 @@
 			       (:file "draggable" :depends-on ("widget"))
 			       (:file "label"     :depends-on ("widget"))
 			       (:file "button"    :depends-on ("widget"))
+			       (:file "checkbox"  :depends-on ("button"))
 		               (:file "container" :depends-on ("widget"))
 			       (:file "subwindow" :depends-on ("container"
 			                                       "draggable"))

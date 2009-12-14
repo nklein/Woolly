@@ -64,6 +64,13 @@
 				      :offset-x 120
 				      :label "Blue"))
 
+      (woolly:add win (sheeple:object :parents toolkit:=checkbox=
+				      :offset-x 230
+				      :offset-y 160
+				      :width 100
+				      :height 30
+				      :label "Check Me!"))
+
       (woolly:add win (sheeple:object :parents toolkit:=label=
 				      :offset-x 230
 				      :offset-y 260

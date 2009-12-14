@@ -11,7 +11,9 @@
 		               (:file "app"       :depends-on ("package"))
 		               (:file "widget"    :depends-on ("utils"))
 			       (:file "label"	  :depends-on ("font"))
-			       (:file "button"	  :depends-on ("utils" "font"))
+			       (:file "button"	  :depends-on ("widget"
+							       "font"))
+			       (:file "checkbox"  :depends-on ("button"))
 			       (:file "subwindow" :depends-on ("utils" "font"))
 			       (:file "window"    :depends-on ("package")))
 		  )))

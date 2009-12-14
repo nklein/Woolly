@@ -28,6 +28,8 @@
 	      #:label
 	   #:=button=
 	      #:clicked
+	   #:=checkbox=
+	      #:pushed
 	   #:=window=
 	      #:title
 	      #:display-window
