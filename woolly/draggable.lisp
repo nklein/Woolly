@@ -33,4 +33,5 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (sheeple:defreply woolly:mouse-down ((dd =draggable=) mb xx yy)
-  (setf (dragging dd) (cons xx yy)))
+  (when (floating dd)
+    (setf (dragging dd) (cons xx yy))))
